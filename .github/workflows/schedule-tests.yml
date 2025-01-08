@@ -1,24 +1,29 @@
-name: Run Tests Every 30 Minutes
+name: Run Tests on Push and Every 30 Minutes
 
 on:
+  push:
+    branches:
+      - main  # Specify the branch to monitor for push events
   schedule:
     # Run the workflow every 30 minutes
     - cron: "*/30 * * * *"
 
 jobs:
-  run-tests:
+  run-tests-and-commit:
     runs-on: ubuntu-latest
 
     steps:
     # Step 1: Check out the repository
     - name: Checkout code
       uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}  # Necessary for committing changes
 
     # Step 2: Set up Python
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: "3.9"  # Specify the Python version you need
+        python-version: "3.9"  # Specify your required Python version
 
     # Step 3: Install dependencies
     - name: Install dependencies
@@ -27,6 +32,17 @@ jobs:
         pip install -r requirements.txt
 
     # Step 4: Run the test script
-    - name: Run test parser
+    - name: Run tests
       run: |
         python test.py
+
+    # Step 5: Commit changes (if any)
+    - name: Commit and push changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add -A
+        git commit -m "Automated updates after running tests" || echo "No changes to commit"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
