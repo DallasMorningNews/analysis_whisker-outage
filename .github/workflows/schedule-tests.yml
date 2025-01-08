@@ -1,0 +1,32 @@
+name: Run Tests Every 30 Minutes
+
+on:
+  schedule:
+    # Run the workflow every 30 minutes
+    - cron: "*/30 * * * *"
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Check out the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"  # Specify the Python version you need
+
+    # Step 3: Install dependencies
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # Step 4: Run the test script
+    - name: Run test parser
+      run: |
+        python test.py

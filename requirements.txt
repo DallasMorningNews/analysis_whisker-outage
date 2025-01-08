@@ -1,0 +1,13 @@
+certifi==2024.12.14
+cffi==1.17.1
+charset-normalizer==3.4.1
+cryptography==44.0.0
+idna==3.10
+msal==1.31.1
+Office365-REST-Python-Client==2.5.14
+pycparser==2.22
+PyJWT==2.10.1
+pytz==2024.2
+requests==2.32.3
+typing_extensions==4.12.2
+urllib3==2.3.0
