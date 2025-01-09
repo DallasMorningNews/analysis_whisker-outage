@@ -1,11 +1,11 @@
-name: Run Tests on Push and Every 30 Minutes
+name: Grab from Whisker and parse outages every 30 mins
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main  # Specify the branch to monitor for push events
   schedule:
-    # Run the workflow every 30 minutes
     - cron: "*/30 * * * *"
 
 jobs:

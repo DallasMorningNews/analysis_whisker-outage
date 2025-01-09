@@ -2,11 +2,6 @@ import requests
 import os
 
 FEDAUTH = os.getenv('FEDAUTH')
-
-if FEDAUTH:
-    print(f"Secret: {FEDAUTH}")
-else:
-    print("Secret not found!")
     
 session = requests.Session()
 session.headers.update({
